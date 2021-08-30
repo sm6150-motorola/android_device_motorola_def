@@ -4,7 +4,7 @@
 
 # Camera
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.vendor.camera.physical.num=5
+    persist.vendor.camera.physical.num=3
 
 # Fingerprint
 PRODUCT_PROPERTY_OVERRIDES += \
