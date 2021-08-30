@@ -30,11 +30,11 @@ TARGET_KERNEL_CONFIG := vendor/def_defconfig
 
 # Kernel modules - Audio
 TARGET_MODULE_ALIASES += \
-    snd-soc-aw882xx.ko:snd_smartpa_aw882xx.ko \
+    snd-soc-aov-trigger.ko:aov_trigger.ko \
     snd-soc-cs35l41.ko:cirrus_cs35l41.ko \
-    snd-soc-wm-adsp.ko:cirrus_wm_adsp.ko \
-    wcd_spi_dlkm.ko:audio_wcd_spi.ko \
-    wcd934x_dlkm.ko:audio_wcd934x.ko
+    snd-soc-cs47l35.ko:cirrus_cs47l35.ko \
+    snd-soc-madera.ko:cirrus_madera.ko \
+    snd-soc-wm-adsp.ko:cirrus_wm_adsp.ko
 
 # SELinux
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
