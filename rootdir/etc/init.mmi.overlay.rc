@@ -1,3 +1,5 @@
+import /vendor/etc/init/hw/init.vendor.st21nfc.rc
+
 service capsense_reset /system/vendor/bin/capsense_reset
    class core
    user system
@@ -7,11 +9,11 @@ service capsense_reset /system/vendor/bin/capsense_reset
 on property:sys.boot_completed=1
     start capsense_reset
 
-on property:sys.system_server.start_count=*
-   restart vendor.mot.popup-hal-1-0
-
 on early-init
-   exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules cirrus_cs35l41 cirrus_playback cirrus_wm_adsp snd_smartpa_aw882xx abov_sar_a96t aw8646 akm09970 focaltech_0flash_mmi.ko
+   exec_background u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules aw8695.ko bq27426_fg_mmi.ko bq2597x_mmi.ko mmi_parallel_charger.ko
+   exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules mxm1120.ko aw8646.ko
+   exec_background u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules cirrus_irq-madera arizona-ldo1 arizona-micsupp gpio-madera madera-pinctrl cirrus_cs35l41 cirrus_cs47l35 cirrus_madera-core cirrus_madera extcon-madera cirrus_playback aov_trigger cirrus_wm_adsp
+   exec_background u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules focaltech_0flash_mmi.ko nova_0flash_mmi.ko focaltech_mmi.ko st21nfc.ko goodix_fod_mmi.ko tps61280.ko ets_fps_mmi.ko stmvl53l1.ko
 
 on init
    # Change ownership for for HBM feature
@@ -28,7 +30,6 @@ on init
    chown system system /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/step
    chown system system /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/ceiling
    chown system system /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/position
-   chown system system /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/time_out
    chmod 0664 /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/enable
    chmod 0664 /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/dir
    chmod 0664 /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/mode
@@ -36,39 +37,31 @@ on init
    chmod 0664 /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/step
    chmod 0664 /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/ceiling
    chmod 0664 /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/position
-   chmod 0664 /sys/devices/platform/soc/soc\:moto_aw8646_support/aw8646/control/time_out
-   chown system system /sys/devices/platform/soc/a8c000.i2c/i2c-2/2-000d/akm09970/control/delay
-   chown system system /sys/devices/platform/soc/a8c000.i2c/i2c-2/2-000d/akm09970/control/enable
-   chown system system /sys/devices/platform/soc/a8c000.i2c/i2c-2/2-000d/akm09970/control/rawdata
-   chmod 0664 /sys/devices/platform/soc/a8c000.i2c/i2c-2/2-000d/akm09970/control/delay
-   chmod 0664 /sys/devices/platform/soc/a8c000.i2c/i2c-2/2-000d/akm09970/control/enable
-   chmod 0664 /sys/devices/platform/soc/a8c000.i2c/i2c-2/2-000d/akm09970/control/rawdata
+   chown system system /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000c/mxm1120_top/control/delay
+   chown system system /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000c/mxm1120_top/control/enable
+   chown system system /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000c/mxm1120_top/control/rawdata
+   chown system system /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000f/mxm1120_bottom/control/delay
+   chown system system /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000f/mxm1120_bottom/control/enable
+   chown system system /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000f/mxm1120_bottom/control/rawdata
+   chmod 0664 /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000c/mxm1120_top/control/delay
+   chmod 0664 /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000c/mxm1120_top/control/enable
+   chmod 0664 /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000c/mxm1120_top/control/rawdata
+   chmod 0664 /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000f/mxm1120_bottom/control/delay
+   chmod 0664 /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000f/mxm1120_bottom/control/enable
+   chmod 0664 /sys/devices/platform/soc/88c000.i2c/i2c-2/2-000f/mxm1120_bottom/control/rawdata
 
 on post-fs
    #create and change ownership and access mode for popup device
    mkdir /mnt/vendor/persist/factory/popup 0775 oem_5004 system
    chown oem_5004 system /mnt/vendor/persist/factory/popup/popup_cali.data
    chmod 0664 /mnt/vendor/persist/factory/popup/popup_cali.data
-   chown oem_5004 system /mnt/vendor/persist/factory/popup/popup_flag.data
-   chmod 0664 /mnt/vendor/persist/factory/popup/popup_flag.data
-
-on post-fs
-    mount none /vendor/firmware_mnt/image/bdwlan_def_ipa.bin /vendor/firmware_mnt/image/bdwlan.bin bind
 
 on boot
    # change permission for capsensor
    chown system system /sys/class/capsense/reset
    chown system system /sys/class/capsense/int_state
 
-   # Change ownership for touch gesture
-   chown root input /sys/class/sensors/dt-gesture/enable
-   chown root input /sys/class/sensors/dt-gesture/poll_delay
-
-   # Change ownership for touch palm
-   chown root input /sys/class/sensors/palm-gesture/enable
-   chown root input /sys/class/sensors/palm-gesture/poll_delay
-
-   # Change the ownership of display TE files for tcmds
+   # Change the ownership of display TE files for 5004s
    chown root oem_5004 /sys/class/graphics/fb0/te_test
    chown root oem_5004 /sys/class/graphics/fb0/te_enable
    chown root oem_5004 /sys/class/graphics/fb0/frame_counter
@@ -76,12 +69,6 @@ on boot
    chown root oem_5004 /d/dsi_tianma_639_1080x2340_cmd_display/esd_check_mode
    chmod 0664 /d/dsi_tianma_639_1080x2340_cmd_display/esd_check_mode
    chmod 0664 /d/dsi_smd_639_1080x2340_cmd_display/esd_check_mode
-   # goodix fingerprint
-   chown system system /dev/goodix_fp
-   chmod 0664 /dev/goodix_fp
-   mkdir /data/vendor/gf_data 0770 system system
-   mkdir /mnt/vendor/persist/goodix 0770 system system
-
 
    # in FBE mode, /data is here
    write /sys/block/sdb/queue/read_ahead_kb 512
@@ -173,7 +160,6 @@ on boot
    chmod 0660 /sys/devices/virtual/input/input1/timing_budget
    chmod 0664 /mnt/vendor/persist/camera/focus/offset_cal
    chmod 0664 /mnt/vendor/persist/camera/focus/cal_data
-   
    # Add for goodix fingerprint
    chown system system /dev/goodix_fp
    chmod 0664 /dev/goodix_fp
@@ -207,8 +193,16 @@ on boot
    chown 0664 /sys/class/power_supply/qcom_battery/device/force_chg_ibatt
    chown 0664 /sys/class/power_supply/qcom_battery/device/force_chg_itrick
 
-   chmod 660 /dev/cci_intf
-   chown system camera /dev/cci_intf
+service vendor.vl53l1_daemon /vendor/bin/vl53l1_daemon
+    class late_start
+    user root
+    group root
+    socket vl53l1_daemon stream 660 root system
+
+service vendor.mmi-laser-sh /vendor/bin/init.mmi.laser.sh
+    class core
+    user root
+    oneshot
 
 # Autotest script for Moto stress test. Need disable sepolcy.
 service vendor.mmi-autotest-sh /vendor/bin/init.mmi.autotest.sh
@@ -222,6 +216,7 @@ on property:persist.vendor.autotest.loop=1
 
 on property:ro.build.type=userdebug
     insmod /vendor/lib/modules/watchdogtest.ko
+    start vendor.touchRec
     setprop persist.vendor.qg.log_level 0
     start vendor.mmi-autotest-sh
 
@@ -250,6 +245,10 @@ on property:ro.bootmode=normal
 on property:ro.bootmode=mot-factory
     write /sys/module/usb3813_hub/parameters/boost_val 5
 
-# export frontcolor value for MotoLiveWallpaper2 app reads it.
-on property:ro.vendor.hw.frontcolor=*
-   setprop ro.hardware.device.frontcolor ${ro.vendor.hw.frontcolor}
+on property:sys.boot_completed=1
+    chown oem_pwric oem_pwric /sys/class/power_supply/battery/cycle_count
+    chmod 0644 /sys/class/power_supply/battery/cycle_count
+
+# restart sensorHAL when framework died
+on property:init.svc.zygote=restarting
+    restart vendor.sensors-hal-2-0-multihal
