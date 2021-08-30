@@ -220,6 +220,11 @@ vendor/firmware/marley-dsp2-aov-frontend.wmfw
 vendor/firmware/marley-dsp2-aov-vrgain.bin
 vendor/firmware/marley-dsp3-aov-control.wmfw
 
+# NFC
+vendor/lib/nfc_nci.st21nfc.st.so
+vendor/lib64/nfc_nci.st21nfc.st.so
+vendor/firmware/st21nfc_fw.bin
+
 # OEM
 vendor/etc/vhw.xml
 
