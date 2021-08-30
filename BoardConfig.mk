@@ -16,7 +16,7 @@
 
 -include device/motorola/sm6150-common/BoardConfigCommon.mk
 
-DEVICE_PATH := device/motorola/liber
+DEVICE_PATH := device/motorola/def
 
 # Display
 TARGET_SCREEN_DENSITY := 420
@@ -26,7 +26,7 @@ DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 
 # Kernel
-TARGET_KERNEL_CONFIG := vendor/liber_defconfig
+TARGET_KERNEL_CONFIG := vendor/def_defconfig
 
 # Kernel modules - Audio
 TARGET_MODULE_ALIASES += \

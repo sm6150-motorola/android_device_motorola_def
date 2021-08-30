@@ -1,5 +1,5 @@
 #
-# Properties for liber
+# Properties for def
 #
 
 # Camera

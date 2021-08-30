@@ -53,7 +53,7 @@ on post-fs
    chmod 0664 /mnt/vendor/persist/factory/popup/popup_flag.data
 
 on post-fs
-    mount none /vendor/firmware_mnt/image/bdwlan_liber_ipa.bin /vendor/firmware_mnt/image/bdwlan.bin bind
+    mount none /vendor/firmware_mnt/image/bdwlan_def_ipa.bin /vendor/firmware_mnt/image/bdwlan.bin bind
 
 on boot
    # change permission for capsensor
